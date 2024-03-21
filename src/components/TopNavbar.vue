@@ -5,7 +5,7 @@
                 <img src="@/assets/logo-polifonia.svg" alt="">
             </router-link>
             <router-link to="/" class="navbar-brand align-bottom pl-3 pe-4 pb-0 pt-2">
-                <span id="site_name">Patterns UI</span>
+                <span id="site_name">Harmory UI</span>
             </router-link>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

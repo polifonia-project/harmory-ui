@@ -39,9 +39,9 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="item_tune_type" class="col-sm-2 col-form-label">Tune Type</label>
+                        <label for="item_tune_type" class="col-sm-2 col-form-label">Genre</label>
                         <div class="col-sm-10">
-                            <Multiselect id="item_tune_type" v-model="tuneType" :options="tuneTypeOptions" mode="tags" :close-on-select="false" searchable="true" :clear-on-select="false" :preserve-search="true" placeholder="Filter..." @keydown.enter="search"/>
+                            <Multiselect id="item_tune_type" v-model="genre" :options="genreOptions" mode="tags" :close-on-select="false" searchable="true" :clear-on-select="false" :preserve-search="true" placeholder="Filter..." @keydown.enter="search"/>
                         </div>
                     </div>
                 </div>
@@ -80,18 +80,16 @@
                     <tr>
                         <th>Name</th>
                         <th>ID</th>
-                        <th>Tune Type</th>
-                        <th>Key</th>
-                        <th>Time Signature</th>
+                        <th>Genre</th>
+                        <th>Artist</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(tune, index) in searchResults" :key="index" @click="openDetails(tune.id.value)">
-                        <td>{{ tune.title.value ? tune.title.value.replace(/^(.*?)(?:, The)$/, "The $1") : "Unknown"}}</td>
-                        <td>{{ this.formatID(tune.id.value) }}</td>
-                        <td>{{ "tuneType" in tune && tune.tuneType.value ? tune.tuneType.value: 'Unknown' }}</td>
-                        <td>{{ "key" in tune && tune.key.value ? tune.key.value.replace(/^(.)(.*)$/, "$1 $2") : 'Unknown' }}</td>
-                        <td>{{ "signature" in tune && tune.signature.value ? tune.signature.value : 'Unknown' }}</td>
+                        <td>{{ tune.title.value ? tune.title.value : "Unknown"}}</td>
+                        <td>{{ tune.id.value }}</td>
+                        <td>{{ "genre" in tune && tune.genre.value ? tune.genre.value: 'Unknown' }}</td>
+                        <td>{{ "artist" in tune && tune.artist.value ? tune.artist.value : 'Unknown' }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -124,8 +122,8 @@ export default {
             keyOptions: [],
             timeSignature: [],
             timeSignatureOptions: [],
-            tuneType: [],
-            tuneTypeOptions: [],
+            genre: [],
+            genreOptions: [],
             noResults: false,
             valid_pattern: true,
         };
@@ -153,7 +151,7 @@ export default {
                     corpus: JSON.parse(JSON.stringify(this.corpus)),
                     key: JSON.parse(JSON.stringify(this.key.map((a) => {return a === "Unknown" ? "" : a.replace(/^(.)\s(.*)$/, "$1$2") }))),
                     timeSignature: JSON.parse(JSON.stringify(this.timeSignature)),
-                    tuneType: JSON.parse(JSON.stringify(this.tuneType)),
+                    genre: JSON.parse(JSON.stringify(this.genre)),
                 };
             } else {
                 params = {
@@ -220,7 +218,7 @@ export default {
             this.$router.push({ name: 'CompositionPage', params: { id: encodeURIComponent(id)}});
         },
         pattern_validation(ptn){
-            let regex = /^[0-9](?:(?:,\s|[_ ,-])[0-9]){3,}$/;
+            let regex = /^[0-9]\.[0-9](?:(?:,\s|[_ ,-])[0-9]\.[0-9]){3,}$/;
             return regex.test(ptn);
         },
         getCorpusList() {
@@ -265,16 +263,16 @@ export default {
                     .catch(() => {});
             }
         },
-        getTuneTypeList() {
-            let tune_type_list = JSON.parse(sessionStorage.getItem('tuneType'));
+        getGenreList() {
+            let tune_type_list = JSON.parse(sessionStorage.getItem('genre'));
             if (tune_type_list) {
-                this.tuneTypeOptions = tune_type_list;
+                this.genreOptions = tune_type_list;
             } else {
                 //Download list of tune types.
                 axios.get(process.env.VUE_APP_SERVER_URL + `/api/tune_type_list`)
                     .then(response => {
-                        this.tuneTypeOptions = response.data.map((a) => {return a ? a : 'Unknown'});
-                        sessionStorage.setItem('tuneType', JSON.stringify(this.tuneTypeOptions));
+                        this.genreOptions = response.data.map((a) => {return a ? a : 'Unknown'});
+                        sessionStorage.setItem('genre', JSON.stringify(this.genreOptions));
                     })
                     .catch(() => {});
             }
@@ -297,7 +295,7 @@ export default {
         // Download the list of time signatures if necessary.
         this.getTimeSigList();
         // Download the list of tune types if necessary.
-        this.getTuneTypeList();
+        this.getGenreList();
     },
     watch: {
         $route(){
@@ -315,7 +313,7 @@ export default {
 
 <style scoped>
     .btn-primary{
-        background-image: linear-gradient(120deg, #6400B5, #FF0000);
+        background-image: linear-gradient(120deg, #00FFFF, #0000FF);
         //border-color: #6400B5;
         border-color: white;
     }

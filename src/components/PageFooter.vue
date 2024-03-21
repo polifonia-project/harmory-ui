@@ -31,7 +31,7 @@
                     <a rel="license" href="https://www.gnu.org/licenses/gpl-3.0.en.html" class="d-flex align-items-center text-white my-4">
                         <img alt="GNU GPLv3" style="border-width:0" src="@/assets/GPLv3_Logo_white.svg">
                         <span style="font-size: small;" class="ms-2">
-                            Polifonia Patterns UI is licensed under the GNU General Public Licence version 3.
+                            Polifonia Harmory UI is licensed under the GNU General Public Licence version 3.
                         </span>
                     </a>
                     <ul class="list-unstyled d-flex justify-content-center mt-4">
@@ -82,7 +82,7 @@ export default {
 
 <style scoped>
 .footer {
-    background-image: linear-gradient(120deg, #6400B5, #FF0000);
+    background-image: linear-gradient(120deg, #00FFFF, #0000FF);
     //background-color: #6400B5;
     //background-color: #92a8d1;
 }
