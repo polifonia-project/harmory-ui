@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="row px-1 py-2 justify-content-center">
-            <div class="col-lg-2 col-md-6 px-4 mb-4">
+            <div class="col-lg-5 col-md-6 px-4 mb-4">
                 <div class="row">
                     <h6>Patterns contained in "{{title.replace(/^(.*?)(?:, The)$/, "The $1")}}" ({{this.formatID(id)}})</h6>
                     <table v-if="ptnData.length > 0" class="table table-hover mt-3">
@@ -36,7 +36,7 @@
                         </thead>
                         <tbody>
                             <tr v-for="(tune, index) in ptnData" :key="index" @click="toPatternPage(tune.pattern.value)">
-                                <td>{{ tune.pattern.value }}</td>
+                                <td>{{ tune.pattern.value.split("/").pop() }}</td>
                                 <td>{{ tune.patternFreq.value}}</td>
                             </tr>
                         </tbody>
@@ -60,7 +60,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-6 px-4 mb-4" v-if="prev">
+            <div class="col-lg-5 col-md-6 px-4 mb-4" v-if="prev">
                 <div class="row">
                     <h6>Patterns in common between "{{title.replace(/^(.*?)(?:, The)$/, "The $1")}}" ({{this.formatID(id)}}) and "{{prevTitle.replace(/^(.*?)(?:, The)$/, "The $1")}}" ({{this.formatID(prev)}})</h6>
                     <table v-if="cmnPtnData.length > 0" class="table table-hover mt-3">
@@ -86,7 +86,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8 col-md-12 px-4">
+            <div class="col-lg-10 col-md-12 px-4">
                 <div class="row px-3 mb-2">
                     <div class="form-check form-switch">
                         <input v-model="net_vis_show_pattterns" class="form-check-input" type="checkbox" id="item_net_vis_show_pattterns" checked>
@@ -159,8 +159,8 @@
                         this.tuneData = response.data.results.bindings;
                         this.childDataLoaded = true;
                         this.title = this.tuneData[0].title.value;
-                        this.tuneFamily = "tuneFamily" in this.tuneData[0] && this.tuneData[0].tuneFamily.value ? this.tuneData[0].tuneFamily.value: 'Unknown';
-                        this.link = "link" in this.tuneData[0] ? this.tuneData[0].link.value : "Undefined";
+                        this.tuneFamily = "genre" in this.tuneData[0] && this.tuneData[0].genre.value ? this.tuneData[0].genre.value: 'Unknown';
+                        this.link = "artist" in this.tuneData[0] ? this.tuneData[0].artist.value : "Undefined";
 
                         //Set the page title for the citation generator.
                         this.pageTitle = this.title.replace(/^(.*?)(?:, The)$/, "The $1") + " (" + this.formatID(this.id) + ")";

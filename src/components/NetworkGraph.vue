@@ -696,7 +696,7 @@ export default {
                     for (let t in neighbours) {
                         node_is_new[t] = true;
                         if(clickedNode.type === "tune"){
-                            neighbID = neighbours[t].pattern.value;
+                            neighbID = neighbours[t].pattern.value.split('/').pop();
                         } else {
                             neighbID = neighbours[t].id.value;
                         }
@@ -721,9 +721,9 @@ export default {
                     for (let t in neighbours){
                         if(node_is_new[t]) {
                             if(clickedNode.type === "tune"){
-                                newID = neighbours[t].pattern.value;
-                                newName = neighbours[t].pattern.value;
-                                newFamily = neighbours[t].pattern.value.replaceAll("_"," ");
+                                newID = neighbours[t].pattern.value.split('/').pop();
+                                newName = neighbours[t].pattern.value.split('/').pop();
+                                newFamily = neighbours[t].pattern.value.split('/').pop().replaceAll("_"," ");
                                 //newColour = this.colours.black;
                                 newColour = "black";
                                 newType = "pattern";
@@ -773,7 +773,7 @@ export default {
                 if(clicked.type === "pattern"){
                     tgt = nodes[n].id.value;
                 } else {
-                    tgt = nodes[n].pattern.value;
+                    tgt = nodes[n].pattern.value.split('/').pop();
                 }
 
                 let newLinkId = [clicked.id, tgt].sort().join("");
